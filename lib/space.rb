@@ -5,6 +5,7 @@ attr_reader(:coordinate, :coord_open, :symbol)
   def initialize(x_coord, y_coord)
     @coordinate = [x_coord, y_coord]
     @coord_open = true
+    @symbol = rand
   end
 
   def mark_space(symbol)

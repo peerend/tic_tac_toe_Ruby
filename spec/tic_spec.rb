@@ -75,6 +75,10 @@ describe 'Game' do
     expect(test_game.board.spaces[0].coord_open).to eq false
     expect(test_game.board.spaces[0].symbol).to eq "O"
   end
+  it 'starts as false' do
+    test_game = Game.new('christian', 'dylan')
+    expect(test_game.win?).to eq false
+  end
   it 'gives a win condition' do
     test_game = Game.new('christian', 'dylan')
     test_game.turn(1,1)

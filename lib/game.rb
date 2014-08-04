@@ -1,5 +1,4 @@
-require 'board'
-require 'player'
+require 'pry'
 
 class Game
 
@@ -13,33 +12,41 @@ attr_reader(:board)
   end
 
   def turn(x, y)
-    if @turn.even?
-      @board.find_tile(x , y).mark_space(@player0.symbol)
-    else
-      @board.find_tile(x , y).mark_space(@player1.symbol)
-    end
-    @turn += 1
+
+      if @turn.even?
+        @board.find_tile(x , y).mark_space("O")
+        active_tile = @board.find_tile(x, y)
+        index = @board.spaces.index(active_tile)
+        @board.grid[index] = "O "
+      else
+        @board.find_tile(x , y).mark_space("X")
+        active_tile = @board.find_tile(x, y)
+        index = @board.spaces.index(active_tile)
+        @board.grid[index] = "X "
+      end
+      @turn += 1
   end
 
   def win?
-    if board.spaces[0].symbol == board.spaces[1].symbol && board.spaces[2].symbol == board.spaces[1].symbol
-      true
-    elsif board.spaces[4].symbol == board.spaces[5].symbol && board.spaces[5].symbol == board.spaces[6].symbol
-      true
-    elsif board.spaces[7].symbol == board.spaces[8].symbol && board.spaces[8].symbol == board.spaces[9].symbol
-      true
-    elsif board.spaces[4].symbol == board.spaces[1].symbol && board.spaces[1].symbol == board.spaces[7].symbol
-      true
-    elsif board.spaces[5].symbol == board.spaces[2].symbol && board.spaces[2].symbol == board.spaces[8].symbol
-      true
-    elsif board.spaces[3].symbol == board.spaces[6].symbol && board.spaces[6].symbol == board.spaces[9].symbol
-      true
-    elsif elsifboard.spaces[9].symbol == board.spaces[5].symbol && board.spaces[5].symbol == board.spaces[1].symbol
-      true
-    elsif board.spaces[7].symbol == board.spaces[5].symbol && board.spaces[5].symbol == board.spaces[3].symbol
-      true
-    else
-      false
+    win = false
+
+    if @board.spaces[0].symbol == @board.spaces[1].symbol && @board.spaces[1].symbol == @board.spaces[2].symbol
+      win = true
+    elsif @board.spaces[3].symbol == @board.spaces[4].symbol && @board.spaces[4].symbol == @board.spaces[5].symbol
+      win = true
+    elsif @board.spaces[6].symbol == @board.spaces[7].symbol && @board.spaces[7].symbol == @board.spaces[8].symbol
+      win = true
+    elsif @board.spaces[0].symbol == @board.spaces[3].symbol && @board.spaces[3].symbol == @board.spaces[6].symbol
+      win = true
+    elsif @board.spaces[1].symbol == @board.spaces[4].symbol && @board.spaces[4].symbol == @board.spaces[7].symbol
+      win = true
+    elsif @board.spaces[2].symbol == @board.spaces[5].symbol && @board.spaces[5].symbol == @board.spaces[8].symbol
+      win = true
+    elsif @board.spaces[0].symbol == @board.spaces[4].symbol && @board.spaces[4].symbol == @board.spaces[8].symbol
+      win = true
+    elsif @board.spaces[2].symbol == @board.spaces[4].symbol && @board.spaces[4].symbol == @board.spaces[6].symbol
+      win = true
     end
+    win
   end
 end
