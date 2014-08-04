@@ -23,9 +23,3 @@ attr_accessor(:spaces)
     found_space
   end
 end
-
-
-new_board = Board.new
-p new_board.spaces
-p new_board.find_tile(1,2)
-p new_board.spaces[1].coord_open

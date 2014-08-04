@@ -1,6 +1,8 @@
 require 'rspec'
 require 'space'
+require 'game'
 require 'board'
+require 'player'
 
 describe 'Space' do
   describe 'initialize' do
@@ -23,8 +25,13 @@ describe 'Space' do
   describe 'mark_space' do
     it 'sets the coord_open variable of a space instance to false' do
       test_Space = Space.new(1,1)
-      test_Space.mark_space
+      test_Space.mark_space("x")
       expect(test_Space.coord_open).to eq(false)
+    end
+    it 'sets a symbol for whomever marked the space' do
+      test_Space = Space.new(1,1)
+      test_Space.mark_space("X")
+      expect(test_Space.symbol).to eq("X")
     end
   end
 end
@@ -45,6 +52,38 @@ describe 'Board' do
   end
 end
 
+describe 'Player' do
+  it 'initializes and creates an instance of a new player' do
+    test_player = Player.new("Christian", "X")
+    expect(test_player).to be_an_instance_of Player
+    expect(test_player.name).to eq("Christian")
+  end
+end
 
+describe 'Game' do
+  it 'initializes and creates an instance of a new game' do
+    test_game = Game.new('christian', 'dylan')
+    expect(test_game).to be_an_instance_of Game
+  end
+  it 'advances the turn counter' do
+    test_game = Game.new('christian', 'dylan')
+    expect(test_game.turn(1,1)).to eq 1
+  end
+  it 'marks spaces with a symbol and openness' do
+    test_game = Game.new('christian', 'dylan')
+    test_game.turn(1,1)
+    expect(test_game.board.spaces[0].coord_open).to eq false
+    expect(test_game.board.spaces[0].symbol).to eq "O"
+  end
+  it 'gives a win condition' do
+    test_game = Game.new('christian', 'dylan')
+    test_game.turn(1,1)
+    test_game.turn(2,2)
+    test_game.turn(1,3)
+    test_game.turn(3,3)
+    test_game.turn(1,2)
+    expect(test_game.win?).to eq true
+  end
+end
 
 
